@@ -1,7 +1,10 @@
 name = "tpil"
 version = "0.1.0"
-defaultTargets = ["tpil"]
+defaultTargets = ["TPIL"]
 
-[[lean_exe]]
-name = "tpil"
-root = "Main"
+[[lean_lib]]
+name = "TPIL"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
