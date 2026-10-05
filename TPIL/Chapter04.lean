@@ -5,7 +5,6 @@ namespace Chapter04
 universe u
 
 variable (α : Type) (P Q : α → Prop)
-
 variable (R : Prop)
 
 /--
@@ -83,3 +82,25 @@ example (a : α) : (∃ x, R -> P x) <-> (R -> ∃ x, P x) :=
       | .inl r  => let ⟨x, px⟩ := rex r; ⟨x, fun _ => px⟩
       | .inr nr => ⟨a, fun r => absurd r nr⟩
   ⟩
+
+
+variable (men : Type) (barber : men)
+variable (shaves : men -> men -> Prop)
+
+/--
+Russell's Paradox (classical)
+-/
+theorem russell_paradox_class (h : ∀ x : men, shaves barber x <-> ¬ shaves x x) : False :=
+  match Classical.em (shaves barber barber) with
+  | .inl b  => ((h barber).mp b) b
+  | .inr nb => absurd ((h barber).mpr nb) nb
+
+/--
+Russell's Paradox (constructive)
+-/
+theorem russell_paradox_const (h : ∀ x : men, shaves barber x <-> ¬ shaves x x) : False := by
+  obtain ⟨ mp, mpr ⟩ := h barber
+  have x := mpr (fun s => mp s s)
+  exact (mp x x)
+
+end Chapter04
