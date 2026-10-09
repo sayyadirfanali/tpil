@@ -1,16 +1,8 @@
 namespace Chapter04
 
-#check Eq.refl "hello"
-
-universe u
-
 variable (α : Type) (P Q : α → Prop)
 variable (R : Prop)
 
-/--
-- `¬ ¬ P` is proven instead of `P` to make it constructive
-- observe the symmetry in the dual legs of `Iff.intro`
--/
 example : (¬ ∀ x, ¬ P x) <-> (¬ ¬ ∃ x, P x) :=
   ⟨
     fun fa ex => fa (fun x px => ex ⟨x, px⟩)
@@ -82,7 +74,6 @@ example (a : α) : (∃ x, R -> P x) <-> (R -> ∃ x, P x) :=
       | .inl r  => let ⟨x, px⟩ := rex r; ⟨x, fun _ => px⟩
       | .inr nr => ⟨a, fun r => absurd r nr⟩
   ⟩
-
 
 variable (men : Type) (barber : men)
 variable (shaves : men -> men -> Prop)
